@@ -1,3 +1,5 @@
+[![Contributors][contributors-shield]][contributors-url]
+
 Template Flask App For Machine Learning and Deep Learning
 =========================
 Use this template to automatically deploy flask application to [riset.informatika.umm.ac.id ](https://riset.informatika.umm.ac.id).
@@ -8,7 +10,7 @@ Clone this repository to your local machine and try dockerize your app using [Do
 
 # 📜 Table of Contents
 - [Generic setup](#generic-setup)
-- [Clone Repository](#clone-repository)
+- [Clone The Repo ](#clone-the-repo)
 
 
 
@@ -19,8 +21,9 @@ Clone this repository to your local machine and try dockerize your app using [Do
 * Permission from administrator
 
 
-# Clone Repository
-clone this repository using git command:
-```groovy
+# Clone The Repo
+### clone this repository using git command:
+```sh
 git clone https://github.com/web-riset/Template-Flask-App.git
 ```
+
