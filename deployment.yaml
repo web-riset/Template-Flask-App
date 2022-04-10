@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: batik50-cnn
+  name: batik50-cnn
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: batik50-cnn
+  template:
+    metadata:
+      labels:
+        app: batik50-cnn
+    spec:
+      containers:
+      - image: <IMAGE>
+        imagePullPolicy: Always
+        name: batik50-cnn
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: batik50-cnn
+  name: batik50-cnn
+  namespace: production
+spec:
+  type: NodePort
+  ports:
+    - nodePort: 32223
+      targetPort: 8000
+      port: 8000
+  selector:
+    app: batik50-cnn
