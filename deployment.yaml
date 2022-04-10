@@ -2,37 +2,68 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: batik50-cnn
-  name: batik50-cnn
+    app: <TITLE>
+  name: <TITLE>
   namespace: production
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: batik50-cnn
+      app: <TITLE>
   template:
     metadata:
       labels:
-        app: batik50-cnn
+        app: <TITLE>
     spec:
       containers:
       - image: <IMAGE>
         imagePullPolicy: Always
-        name: batik50-cnn
+        name: <TITLE>
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: batik50-cnn
-  name: batik50-cnn
+    app: <TITLE>
+  name: <TITLE>
   namespace: production
 spec:
   type: NodePort
   ports:
     - nodePort: 32223
-      targetPort: 8000
-      port: 8000
+      targetPort: <PORT>
+      port: <PORT>
   selector:
-    app: batik50-cnn
+    app: <TITLE>
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: <TITLE>-strip-path-prefix
+  namespace: production
+spec:
+  stripPrefix:
+    prefixes:
+      - <URL-PREFIX>
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: <TITLE>
+  namespace: production
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`riset.informatika.umm.ac.id`) && Path(`<URL-PREFIX>`)
+      kind: Rule
+      middlewares:
+        - name: <TITLE>-strip-path-prefix
+      services:
+        - name: <TITLE>
+          port: <PORT>
+  tls:
+    secretName: tls-secret

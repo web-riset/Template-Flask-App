@@ -5,8 +5,10 @@ pipeline{
   }
 
   environment {
-    nameImage = "batik50-cnn"
-    registry = "$URL_REGISTRY"+ "$nameImage"
+    name = "<name of your app>"
+    port = "<your app port>"
+    urlPrefix = "<url from administrator>"
+    registry = "$URL_REGISTRY"+ "$name"
     dockerImage = ""
   }
   agent none
@@ -43,6 +45,9 @@ pipeline{
           withKubeConfig([credentialsId: 'jenkins-kubernetes', serverUrl: 'https://10.10.11.232:6443']) {
             // sh 'kubectl delete -f deployment.yaml'
             sh 'sed -i "s~<IMAGE>~${registry}:${BUILD_NUMBER}~" deployment.yaml'
+            sh 'sed -i "s~<TITLE>~${name}~" deployment.yaml'
+            sh 'sed -i "s~<PORT>~${port}~" deployment.yaml'
+            sh 'sed -i "s~<URL-PREFIX>~${urlPrefix}~" deployment.yaml'
             sh 'kubectl apply -f deployment.yaml'
           }
         }
