@@ -7,7 +7,7 @@ pipeline{
   environment {
     name = "<name of your app>"
     port = "<your app port>"
-    urlPrefix = "<url from administrator>"
+    urlPrefix = "<subfolder url from administrator>"
     registry = "$URL_REGISTRY"+ "$name"
     dockerImage = ""
   }

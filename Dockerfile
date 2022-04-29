@@ -13,5 +13,6 @@ COPY src .
 
 
 ENV PORT 8000
+ENV SCRIPT_NAME "<subfolder url from administrator>"
 CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 0 main:app
 

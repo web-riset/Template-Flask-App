@@ -151,8 +151,10 @@ COPY src .
 This part is used to run gunicorn on port 8000
 ```Dockerfile
 ENV PORT 8000
+ENV SCRIPT_NAME "<subfolder url from administrator>"
 CMD exec gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 0 main:app
 ```
+change the SCRIPT_NAME environment with the subfolder assigned by the administrator
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -29,24 +29,12 @@ metadata:
   name: <TITLE>
   namespace: production
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
-    - nodePort: 32223
-      targetPort: <PORT>
+    - targetPort: <PORT>
       port: <PORT>
   selector:
     app: <TITLE>
-
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
-  name: <TITLE>-strip-path-prefix
-  namespace: production
-spec:
-  stripPrefix:
-    prefixes:
-      - <URL-PREFIX>
 
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -58,10 +46,8 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`riset.informatika.umm.ac.id`) && Path(`<URL-PREFIX>`)
+    - match: Host(`riset.informatika.umm.ac.id`) && PathPrefix(`<URL-PREFIX>{regex:$$|/.*}`)
       kind: Rule
-      middlewares:
-        - name: <TITLE>-strip-path-prefix
       services:
         - name: <TITLE>
           port: <PORT>
